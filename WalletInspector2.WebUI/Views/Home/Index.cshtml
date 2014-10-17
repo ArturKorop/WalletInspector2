@@ -1,0 +1,16 @@
+﻿@model WalletInspector2.Core.Code.Data.Week
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    
+</div>
+
+<div class="row">
+    @foreach (var day in @Model.Days)
+    {
+        <div>@Html.Partial("~/Views/Day/DayExpensesView.cshtml", day)</div>
+    }
+</div>
+

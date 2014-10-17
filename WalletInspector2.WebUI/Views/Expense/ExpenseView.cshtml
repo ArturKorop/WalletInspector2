@@ -1,0 +1,27 @@
+﻿@model WalletInspector2.Core.Code.Data.ExpenseEntry
+@{
+    var objectId = "Expense" + Model.Id.ToString();
+    var removeLinkId = "removeLink" + Model.Id;
+}
+
+<div id="@objectId">
+    <table>
+        <tr>
+            @using (Ajax.BeginForm("Update", "Expense", new AjaxOptions { HttpMethod = "Post" }))
+            {
+                @Html.HiddenFor(x => x.Id);
+                @Html.HiddenFor(x => x.UserId);
+                @Html.HiddenFor(x => x.Date);
+                <td>@Html.TextBoxFor(x => x.Name)</td>
+                <td>@Html.TextBoxFor(x => x.Value)</td>
+                <td>@Html.TextBoxFor(x => x.Tags)</td>
+                <td><button type="submit" value="Update" class="submitButton" style="width:1em;height:1em" /></td>
+            }
+            @using (Ajax.BeginForm("Remove", "Expense", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = objectId }))
+            {
+                @Html.HiddenFor(x => x.Id);
+                <td><button type="submit" value="Remove" class="removeLink" style="width:1em;height:1em" /></td>
+            }
+        </tr>
+    </table>
+</div>

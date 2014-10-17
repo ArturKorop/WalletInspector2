@@ -1,0 +1,117 @@
+﻿@model WalletInspector2.Core.Code.Data.Day
+@{
+    System.Globalization.DateTimeFormatInfo mfi = new System.Globalization.DateTimeFormatInfo();
+    var monthName = mfi.GetMonthName(Model.Date.Month);
+    var currentPlaceForNewEntry = "placeForNewEntries" + Model.Date.ToShortTimeString();
+}
+
+<script type="text/javascript">
+    function onSuccess() {
+        $("#InputName").val('')
+        $("#InputValue").val('')
+        $("#InputTags").val('')
+
+        $(".submitButton").button({
+            icons: {
+                primary: "ui-icon-refresh"
+            },
+            text: false
+        });
+
+        $(".removeLink").button({
+            icons: {
+                primary: "ui-icon-minusthick"
+            },
+            text: false
+        });
+    }
+
+    $(function () {
+        $(".addButton").button({
+            icons: {
+                primary: "ui-icon-plusthick"
+            },
+            text: false
+        });
+        $(".submitButton").button({
+            icons: {
+                primary: "ui-icon-refresh"
+            },
+            text: false
+        });
+        $(".removeLink").button({
+            icons: {
+                primary: "ui-icon-minusthick"
+            },
+            text: false
+        });
+    })
+
+    
+</script>
+
+<style>
+    #Value, #InputValue{
+        width: 4em;
+        border-width: 1px;
+        margin: 0;
+        font-size: 0.7em;
+    }
+
+    #Name, #InputName{
+        border-width: 1px;
+        margin: 0;
+        font-size: 0.7em;
+    }
+
+    #Tags, #InputTags{
+        border-width: 1px;
+        margin: 0;
+        font-size: 0.7em;
+    }
+
+
+    tr{
+        margin: 0;
+        padding: 0;
+    }
+
+    td{
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<div class="dayView">
+    <table>
+        <tr>
+            <td>
+                <div style="margin: 10px">
+                    <p>@Model.Date.DayOfWeek</p>
+                    <p>@string.Format("{0} {1} {2}", Model.Date.Day, monthName, Model.Date.Year)</p>
+                </div>
+            </td>
+            <td>
+                <div>
+                    @foreach (var expense in Model.Expenses)
+                    {
+                        @Html.Partial("~/Views/Expense/ExpenseView.cshtml", expense)
+                    }
+                    <div id=@currentPlaceForNewEntry></div>
+                    @using (Ajax.BeginForm("Add", "Day", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = currentPlaceForNewEntry, OnSuccess = "onSuccess" }))
+                    {
+                        <table>
+                            <tr>
+                                <td>@Html.TextBox("InputName")</td>
+                                <td>@Html.TextBox("InputValue")</td>
+                                <td>@Html.TextBox("InputTags")</td>
+                                @Html.Hidden("Date", Model.Date)
+                                <td><button type="submit" value="Add" class="addButton" style="width:1em;height:1em" /></td>
+                            </tr>
+                        </table>
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
