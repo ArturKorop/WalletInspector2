@@ -1,0 +1,11 @@
+﻿@model  WalletInspector2.Core.Code.Data.Period
+@{
+    Layout = null;
+}
+
+<div>
+    @foreach (var day in @Model.Days)
+    {
+        <div>@Html.Partial("~/Views/Day/DayExpensesView.cshtml", day)</div>
+    }
+</div>

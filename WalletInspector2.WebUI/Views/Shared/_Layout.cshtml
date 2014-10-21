@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
-    @*@Styles.Render("~/Content/themes/ui-lightness/JqueryUI")*@
-    <link rel="stylesheet" type="text/css" href="Content/themes/base/all.css" />
-    <link rel="stylesheet" type="text/css" href="Content/themes/redmond/jquery-ui.redmond.css" />
-    @*@Scripts.Render("~/bundles/modernizr")*@
+    @Styles.Render("~/Content/themes/base/all")
+    @Styles.Render("~/Content/themes/redmond/jqueryuiredmond")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryUI")
-    @*@Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </head>
 <body>

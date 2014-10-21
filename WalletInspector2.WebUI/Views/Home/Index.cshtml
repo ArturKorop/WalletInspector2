@@ -1,16 +1,39 @@
-﻿@model WalletInspector2.Core.Code.Data.Week
+﻿@model WalletInspector2.Core.Code.Data.Period
 @{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    
-</div>
+@Scripts.Render("~/bundles/main")
 
-<div class="row">
-    @foreach (var day in @Model.Days)
-    {
-        <div>@Html.Partial("~/Views/Day/DayExpensesView.cshtml", day)</div>
-    }
+<script type="text/javascript">
+    $(document).ready(function () {
+        UpdateButtons();
+        UpdatePrevNextButtons();
+    })
+</script>
+
+
+<div style="align-content:center;width:100%;height:80%">
+    <div style="width: 30%;">
+        <div>
+            <div style="float:left">
+                @using (Ajax.BeginForm("Previous", "Home", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "daysView", OnSuccess = "UpdateButtons" }))
+                {
+                    <button type="submit" value="Prev" id="ButtonPrev" />
+                }
+            </div>
+
+            <div style="float:none">
+                @using (Ajax.BeginForm("Next", "Home", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "daysView", OnSuccess = "UpdateButtons" }))
+                {
+                    <button type="submit" value="Next" id="ButtonNext" />
+                }
+            </div>
+        </div>
+
+        <div class="row" id="daysView">
+            @Html.Partial("~/Views/Home/DaysView.cshtml", Model)
+        </div>
+    </div>
 </div>
 

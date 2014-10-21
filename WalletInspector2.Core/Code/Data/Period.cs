@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WalletInspector2.Core.Code.Data
 {
-    public class Week
+    public class Period
     {
         public List<Day> Days { get; set; }
     }

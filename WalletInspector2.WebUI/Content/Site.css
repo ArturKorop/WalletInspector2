@@ -22,3 +22,65 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#Value, .InputValueClass{
+        width: 4em;
+        border-width: 1px;
+        margin: 0;
+        font-size: 0.7em;
+    }
+
+    #Name, .InputNameClass{
+        border-width: 1px;
+        margin: 0;
+        font-size: 0.7em;
+    }
+
+    #Tags, .InputTagsClass{
+        border-width: 1px;
+        margin: 0;
+        font-size: 0.7em;
+    }
+    #Value {
+        background-color: floralwhite;
+    }
+    .InputValueClass {
+        background-color: ghostwhite;
+    }
+
+
+    #Name {
+        background-color: floralwhite;
+    }
+    
+    .InputNameClass{
+        background-color: ghostwhite;
+    }
+
+    #Tags{
+        background-color: floralwhite;
+    }
+    .InputTagsClass{
+        background-color: ghostwhite;
+    }
+
+
+    tr{
+        margin: 0;
+        padding: 0;
+    }
+
+    td{
+        margin: 0;
+        padding: 0;
+    }
+    p{
+        margin: 0;
+        padding: 0;
+    }
+
+    .dayViewTable{
+        border-style:solid;
+        border-width:1px;
+        border-color:navajowhite;
+    }
