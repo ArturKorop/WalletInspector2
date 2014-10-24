@@ -1,11 +1,63 @@
 ﻿@model  WalletInspector2.Core.Code.Data.Period
 @{
     Layout = null;
+    var data = this.Model.Days.First().Expenses;
+
+    var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+    var mdata = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(jsonData);
+
 }
 
-<div>
+@Scripts.Render("~/bundles/highcharts")
+
+<script type="text/javascript">
+    $(function () {
+    
+        $.ajax({
+            url: "/Home/GetWeekData",
+            contentType: 'application/html; charset=utf-8',
+            type: 'Post',
+            dataType: 'json'
+        })
+            .success(function (result) {
+
+                $('#container').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'Month'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name} - {point}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true
+                            },
+                            showInLegend: false
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Browser share',
+                        data: result
+                    }]
+                });
+            });
+
+});
+</script>
+
+<div id="DayView">
     @foreach (var day in @Model.Days)
     {
         <div>@Html.Partial("~/Views/Day/DayExpensesView.cshtml", day)</div>
     }
 </div>
+<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto;float:left"></div>

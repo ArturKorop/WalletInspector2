@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using WalletInspector2.Core.Code.Data;
 
@@ -6,14 +7,22 @@ namespace WalletInspector2.Core.Interfaces
 {
     public interface IRepository
     {
-        ExpenseEntry Add(ExpenseEntry entry);
+        ExpenseEntry AddEntry(ExpenseEntry entry);
 
-        IEnumerable<ExpenseEntry> All(int userId);
+        void RemoveEntryById(int id);
 
-        void Remove(int id);
+        void UpdateEntry(ExpenseEntry entry);
 
-        ExpenseEntry Get(int id);
+        ExpenseEntry GetEntryById(int id);
 
-        void Update(ExpenseEntry entry);
+        IEnumerable<ExpenseEntry> GetAllEntriesByUserId(Guid userId);
+
+        IEnumerable<ExpenseEntry> GetAllEntriesByDay(DateTime day, Guid userId);
+
+        IEnumerable<ExpenseEntry> GetAllEntriesByWeek(DateTime week, Guid userId);
+
+        IEnumerable<ExpenseEntry> GetAllEntriesByMonth(DateTime month, Guid userId);
+
+        IEnumerable<ExpenseEntry> GetAllEntriesByYear(DateTime year, Guid userId);
     }
 }

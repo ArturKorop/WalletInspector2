@@ -110,6 +110,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -167,6 +168,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Code\Extensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DayController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
@@ -263,6 +265,39 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\highcharts\adapters\standalone-framework.js" />
+    <Content Include="Scripts\highcharts\adapters\standalone-framework.src.js" />
+    <Content Include="Scripts\highcharts\highcharts-3d.js" />
+    <Content Include="Scripts\highcharts\highcharts-3d.src.js" />
+    <Content Include="Scripts\highcharts\highcharts-all.js" />
+    <Content Include="Scripts\highcharts\highcharts-more.js" />
+    <Content Include="Scripts\highcharts\highcharts-more.src.js" />
+    <Content Include="Scripts\highcharts\highcharts.js" />
+    <Content Include="Scripts\highcharts\highcharts.src.js" />
+    <Content Include="Scripts\highcharts\modules\canvas-tools.js" />
+    <Content Include="Scripts\highcharts\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\highcharts\modules\data.js" />
+    <Content Include="Scripts\highcharts\modules\data.src.js" />
+    <Content Include="Scripts\highcharts\modules\drilldown.js" />
+    <Content Include="Scripts\highcharts\modules\drilldown.src.js" />
+    <Content Include="Scripts\highcharts\modules\exporting.js" />
+    <Content Include="Scripts\highcharts\modules\exporting.src.js" />
+    <Content Include="Scripts\highcharts\modules\funnel.js" />
+    <Content Include="Scripts\highcharts\modules\funnel.src.js" />
+    <Content Include="Scripts\highcharts\modules\heatmap.js" />
+    <Content Include="Scripts\highcharts\modules\heatmap.src.js" />
+    <Content Include="Scripts\highcharts\modules\no-data-to-display.js" />
+    <Content Include="Scripts\highcharts\modules\no-data-to-display.src.js" />
+    <Content Include="Scripts\highcharts\modules\solid-gauge.js" />
+    <Content Include="Scripts\highcharts\modules\solid-gauge.src.js" />
+    <Content Include="Scripts\highcharts\themes\dark-blue.js" />
+    <Content Include="Scripts\highcharts\themes\dark-green.js" />
+    <Content Include="Scripts\highcharts\themes\dark-unica.js" />
+    <Content Include="Scripts\highcharts\themes\gray.js" />
+    <Content Include="Scripts\highcharts\themes\grid-light.js" />
+    <Content Include="Scripts\highcharts\themes\grid.js" />
+    <Content Include="Scripts\highcharts\themes\sand-signika.js" />
+    <Content Include="Scripts\highcharts\themes\skies.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
@@ -322,7 +357,6 @@
     <Content Include="Views\Expense\EmptyView.cshtml" />
     <Content Include="Views\Home\DaysView.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

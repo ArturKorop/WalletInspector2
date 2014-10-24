@@ -10,32 +10,29 @@ namespace WalletInspector2.Core.Code.Data
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public List<string> Tags { get; set; }
+        public string Tag { get; set; }
 
         public double Value { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
         public DateTime Date { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
-        public ExpenseEntry(string name, double value, List<string> tags, DateTime date, int userId)
+        public ExpenseEntry(string name, double value, string tag, DateTime date, Guid userId)
         {
             this.Name = name;
             this.Value = value;
-            this.Tags = tags;
+            this.Tag = tag;
             this.Date = date;
             this.UserId = userId;
         }
 
-        public ExpenseEntry(int id, string name, double value, List<string> tags, DateTime date, int userId)
-            : this(name, value, tags, date, userId)
+        public ExpenseEntry(int id, string name, double value, string tag, DateTime date, Guid userId)
+            : this(name, value, tag, date, userId)
         {
             this.Id = id;
         }
@@ -48,13 +45,13 @@ namespace WalletInspector2.Core.Code.Data
         {
             this.Name = entry.Name;
             this.Value = entry.Value;
-            this.Tags = entry.Tags;
+            this.Tag = entry.Tag;
             this.Date = entry.Date;
         }
 
         public ExpenseEntry Clone()
         {
-            return new ExpenseEntry(this.Id, this.Name, this.Value, this.Tags, this.Date, this.UserId);
+            return new ExpenseEntry(this.Id, this.Name, this.Value, this.Tag, this.Date, this.UserId);
         }
     }
 }

@@ -36,7 +36,7 @@ textarea {
         font-size: 0.7em;
     }
 
-    #Tags, .InputTagsClass{
+    #Tag, .InputTagClass{
         border-width: 1px;
         margin: 0;
         font-size: 0.7em;
@@ -57,10 +57,10 @@ textarea {
         background-color: ghostwhite;
     }
 
-    #Tags{
+    #Tag{
         background-color: floralwhite;
     }
-    .InputTagsClass{
+    .InputTagClass{
         background-color: ghostwhite;
     }
 
@@ -83,4 +83,11 @@ textarea {
         border-style:solid;
         border-width:1px;
         border-color:navajowhite;
+    }
+
+    footer{
+        position:absolute;
+        bottom: 0;
+        width: 90%;
+        height: 20px;
     }

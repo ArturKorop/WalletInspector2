@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WalletInspector2.Core.Code.Data;
 using WalletInspector2.Core.Code.Main;
 using WalletInspector2.Core.Interfaces;
+using Microsoft.AspNet.Identity;
+using WalletInspector2.WebUI.Code;
 
 namespace WalletInspector2.WebUI.Controllers
 {
@@ -13,10 +16,23 @@ namespace WalletInspector2.WebUI.Controllers
     {
         private IRepository db = ServiceLocator.Get<IRepository>();
 
-        public ActionResult Add(string inputName, int inputValue, string inputTags, DateTime date)
+        private Guid UserId
         {
-            var expense = new ExpenseEntry(inputName, inputValue, null, date, 1);
-            var result = this.db.Add(expense);
+            get
+            {
+                if(this.User != null)
+                {
+                    return new Guid(this.User.Identity.GetUserId());
+                }
+
+                return Guid.Empty;
+            }
+        }
+
+        public ActionResult Add(string inputName, double inputValue, string inputTag, DateTime date)
+        {
+            var expense = new ExpenseEntry(inputName, inputValue, inputTag, date, this.User.Id());
+            var result = this.db.AddEntry(expense);
 
             return PartialView("~/Views/Expense/ExpenseView.cshtml", result);
         }

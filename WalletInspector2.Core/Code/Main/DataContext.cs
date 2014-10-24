@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using WalletInspector2.Core.Code.Data;
 using WalletInspector2.Core.Interfaces;
+using WalletInspector2.Core.Code.Extensions;
 
 namespace WalletInspector2.Core.Code.Main
 {
@@ -17,7 +19,7 @@ namespace WalletInspector2.Core.Code.Main
         {
         }
 
-        public ExpenseEntry Add(ExpenseEntry entry)
+        public ExpenseEntry AddEntry(ExpenseEntry entry)
         {
             this.Entries.Add(entry);
             this.SaveChanges();
@@ -25,14 +27,14 @@ namespace WalletInspector2.Core.Code.Main
             return entry.Clone();
         }
 
-        public void Update(ExpenseEntry entry)
+        public void UpdateEntry(ExpenseEntry entry)
         {
             var updatingEntry = this.Entries.Single(x => x.Id == entry.Id);
             updatingEntry.Update(entry);
             this.SaveChanges();
         }
 
-        public void Remove(int id)
+        public void RemoveEntryById(int id)
         {
             var removingEntry = this.Entries.SingleOrDefault(x => x.Id == id);
             if (removingEntry != null)
@@ -42,14 +44,34 @@ namespace WalletInspector2.Core.Code.Main
             }
         }
 
-        public ExpenseEntry Get(int id)
+        public ExpenseEntry GetEntryById(int id)
         {
             return this.Entries.Single(x => x.Id == id);
         }
 
-        public IEnumerable<ExpenseEntry> All(int userId)
+        public IEnumerable<ExpenseEntry> GetAllEntriesByUserId(Guid userId)
         {
             return this.Entries.Where(x => x.UserId == userId).ToList();
+        }
+
+        public IEnumerable<ExpenseEntry> GetAllEntriesByDay(DateTime day, Guid userId)
+        {
+            return this.Entries.Where(x => x.UserId == userId && x.Date.IsSameDay(day));
+        }
+
+        public IEnumerable<ExpenseEntry> GetAllEntriesByWeek(DateTime week, Guid userId)
+        {
+            return this.Entries.Where(x => x.UserId == userId && x.Date.IsSameWeek(week));
+        }
+
+        public IEnumerable<ExpenseEntry> GetAllEntriesByMonth(DateTime month, Guid userId)
+        {
+            return this.Entries.Where(x => x.UserId == userId && x.Date.IsSameMonth(month));
+        }
+
+        public IEnumerable<ExpenseEntry> GetAllEntriesByYear(DateTime year, Guid userId)
+        {
+            return this.Entries.Where(x => x.UserId == userId && x.Date.IsSameYear(year));
         }
     }
 }

@@ -22,13 +22,13 @@ namespace WalletInspector2.WebUI.Controllers
         [HttpPost]
         public void Update(ExpenseEntry entry)
         {
-            this.db.Update(entry);
+            this.db.UpdateEntry(entry);
         }
 
         [HttpPost]
         public void Remove(int id)
         {
-            this.db.Remove(id);
+            this.db.RemoveEntryById(id);
         }
     }
 }

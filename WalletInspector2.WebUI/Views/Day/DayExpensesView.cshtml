@@ -6,7 +6,7 @@
     var currentPlaceForNewEntry = "placeForNewEntries" + dateString;
     var inputName = "InputName";
     var inputValue = "InputValue";
-    var inputTags = "InputTags";
+    var inputTag = "InputTag";
 }
 
 <div class="dayView">
@@ -33,7 +33,7 @@
                             <tr>
                                 <td>@Html.TextBox(inputName, null, new { @class = "InputNameClass" })</td>
                                 <td>@Html.TextBox(inputValue, null, new { @class = "InputValueClass" })</td>
-                                <td>@Html.TextBox(inputTags, null, new { @class = "InputTagsClass" })</td>
+                                <td>@Html.TextBox(inputTag, null, new { @class = "InputTagClass" })</td>
                                 @Html.Hidden("Date", Model.Date)
                                 <td><button type="submit" value="Add" class="addButton" style="width:1em;height:1em;margin-left:0.25em" /></td>
                             </tr>

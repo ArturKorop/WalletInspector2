@@ -7,12 +7,24 @@ using WalletInspector2.Core.Code.Main;
 using WalletInspector2.Core.Code.Data;
 using WalletInspector2.Core.Interfaces;
 using WalletInspector2.WebUI.Models;
+using System.Web.Script.Serialization;
+using WebMatrix.WebData;
+using Microsoft.AspNet.Identity;
+using WalletInspector2.WebUI.Code;
 
 namespace WalletInspector2.WebUI.Controllers
 {
     public class HomeController : Controller
     {
         private IRepository db;
+
+        private Guid UserId
+        {
+            get
+            {
+                return this.User.Id();
+            }
+        }
 
         public Period CurrentPeriod
         {
@@ -33,7 +45,12 @@ namespace WalletInspector2.WebUI.Controllers
 
         public ActionResult Index()
         {
-            var temp = this.db.All(1);
+            var test = new { Value = 15 };
+            var test2 = new JavaScriptSerializer();
+            var test3 = test2.Serialize(test);
+            var test4 = test3.Count();
+
+            var temp = this.db.GetAllEntriesByUserId(this.UserId);
             var week = new Period();
             week.Days = new List<Day>()
             {
@@ -53,7 +70,7 @@ namespace WalletInspector2.WebUI.Controllers
             var currentDate = this.CurrentPeriod.Days.First().Date;
             ModelState.Remove("Date");
             var prevDate = currentDate.AddDays(-1);
-            var temp = this.db.All(1);
+            var temp = this.db.GetAllEntriesByUserId(this.UserId);
             var week = new Period();
             week.Days = new List<Day>()
             {
@@ -73,7 +90,7 @@ namespace WalletInspector2.WebUI.Controllers
             var currentDate = this.CurrentPeriod.Days.Last().Date;
             ModelState.Remove("Date");
             var nextDate = currentDate.AddDays(1);
-            var temp = this.db.All(1);
+            var temp = this.db.GetAllEntriesByUserId(this.UserId);
             var week = new Period();
             week.Days = new List<Day>()
             {
@@ -88,6 +105,43 @@ namespace WalletInspector2.WebUI.Controllers
 
             return View("~/Views/Home/DaysView.cshtml", week);
         }
+
+        [HttpPost]
+        public JsonResult GetWeekData()
+        {
+            var data = this.db.GetAllEntriesByUserId(this.UserId);
+            var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+
+            return new JsonResult() { Data = jsonData };
+        }
+
+        //[HttpPost]
+        //public JsonResult GetMonthData()
+        //{
+        //    var data = this.db.All(1);
+        //    var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+
+        //    return new JsonResult() { Data = jsonData };
+        //}
+
+        //[HttpPost]
+        //public JsonResult GetYearData()
+        //{
+        //    var data = this.db.All(1);
+        //    var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+
+        //    return new JsonResult() { Data = jsonData };
+        //}
+
+        //[HttpPost]
+        //public JsonResult GetTotalData()
+        //{
+        //    var data = this.db.All(1);
+        //    var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+
+        //    return new JsonResult() { Data = jsonData };
+        //}
+
 
         public ActionResult About()
         {

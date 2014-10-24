@@ -1,7 +1,7 @@
 ﻿function onSuccess() {
     $(".InputNameClass").val('')
     $(".InputValueClass").val('')
-    $(".InputTagsClass").val('')
+    $(".InputTagClass").val('')
 
     $(".updateButton").button({
         icons: {

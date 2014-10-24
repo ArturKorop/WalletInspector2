@@ -58,32 +58,16 @@
   <ItemGroup>
     <Compile Include="Code\Data\Day.cs" />
     <Compile Include="Code\Data\Period.cs" />
+    <Compile Include="Code\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Code\Main\DataContext.cs" />
     <Compile Include="Code\Data\ExpenseEntry.cs" />
     <Compile Include="Code\Main\ServiceLocator.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Migrations\201410141341202_InitialCreate.cs" />
-    <Compile Include="Migrations\201410141341202_InitialCreate.Designer.cs">
-      <DependentUpon>201410141341202_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201410141345062_InitialCreate2.cs" />
-    <Compile Include="Migrations\201410141345062_InitialCreate2.Designer.cs">
-      <DependentUpon>201410141345062_InitialCreate2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410141341202_InitialCreate.resx">
-      <DependentUpon>201410141341202_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201410141345062_InitialCreate2.resx">
-      <DependentUpon>201410141345062_InitialCreate2.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
