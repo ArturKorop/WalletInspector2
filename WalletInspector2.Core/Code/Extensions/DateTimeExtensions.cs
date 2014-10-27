@@ -17,9 +17,14 @@ namespace WalletInspector2.Core.Code.Extensions
         {
             var dayOfWeek = (int)week.DayOfWeek;
             var beginOfWeek = week.AddDays(1 - dayOfWeek);
-            var endOfWeek = week.AddDays(7 - dayOfWeek);
 
-            return source.Year == week.Year && source.Month == week.Month && source.Day == week.Day;
+            var fullWeek = new List<DateTime>();
+            for (int i = 0; i < 7; i++)
+            {
+                fullWeek.Add(beginOfWeek.AddDays(i));
+            }
+
+            return fullWeek.Any(x => x.IsSameDay(source));
         }
 
         public static bool IsSameMonth(this DateTime source, DateTime month)

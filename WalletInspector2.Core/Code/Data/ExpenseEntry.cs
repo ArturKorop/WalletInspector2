@@ -53,5 +53,10 @@ namespace WalletInspector2.Core.Code.Data
         {
             return new ExpenseEntry(this.Id, this.Name, this.Value, this.Tag, this.Date, this.UserId);
         }
+
+        public ExpenseData ToExpenseData()
+        {
+            return new ExpenseData { Name = this.Name, Value = this.Value, Tag = this.Tag };
+        }
     }
 }

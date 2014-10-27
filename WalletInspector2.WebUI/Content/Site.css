@@ -1,6 +1,11 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    height: 100%;
+}
+
+html{
+    height:100%;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -90,4 +95,27 @@ textarea {
         bottom: 0;
         width: 90%;
         height: 20px;
+    }
+
+    #dayView{
+        width: 30%;
+        margin: 5px;
+        float:left;
+    }
+
+    #monthStat{
+        width:60%;
+        height:100%;
+        float:right;
+    }
+
+    #weekStat{
+        width:30%;
+        height: 60%;
+        float: left;
+    }
+
+    .cont{
+        height:96%;
+        padding: 2%;
     }

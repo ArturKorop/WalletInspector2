@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace WalletInspector2.Core.Code.Data
 {
-    public class Period
+    public class ExpenseData
     {
-        public List<Day> Days { get; set; }
+        public string Name { get; set; }
 
-        public Period()
-        {
-            this.Days = new List<Day>();
-        }
+        public double Value { get; set; }
+
+        public string Tag { get; set; }
     }
 }

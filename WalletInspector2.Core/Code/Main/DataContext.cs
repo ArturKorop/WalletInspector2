@@ -56,22 +56,25 @@ namespace WalletInspector2.Core.Code.Main
 
         public IEnumerable<ExpenseEntry> GetAllEntriesByDay(DateTime day, Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId && x.Date.IsSameDay(day));
+            return this.Entries.Where(x => x.UserId == userId).ToList().Where(x => x.Date.IsSameDay(day));
         }
 
         public IEnumerable<ExpenseEntry> GetAllEntriesByWeek(DateTime week, Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId && x.Date.IsSameWeek(week));
+            var temp = this.Entries.Where(x => x.UserId == userId).ToList();
+            var temp2 = temp.Where(x => x.Date.IsSameWeek(week));
+
+            return temp2;
         }
 
         public IEnumerable<ExpenseEntry> GetAllEntriesByMonth(DateTime month, Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId && x.Date.IsSameMonth(month));
+            return this.Entries.Where(x => x.UserId == userId).ToList().Where(x => x.Date.IsSameMonth(month));
         }
 
         public IEnumerable<ExpenseEntry> GetAllEntriesByYear(DateTime year, Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId && x.Date.IsSameYear(year));
+            return this.Entries.Where(x => x.UserId == userId).ToList().Where(x => x.Date.IsSameYear(year));
         }
     }
 }

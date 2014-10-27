@@ -16,7 +16,7 @@ namespace WalletInspector2.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private IRepository db;
+        private DateProcessor dateProcessor;
 
         private Guid UserId
         {
@@ -40,28 +40,15 @@ namespace WalletInspector2.WebUI.Controllers
 
         public HomeController()
         {
-            this.db = ServiceLocator.Get<IRepository>();
+            this.dateProcessor = new DateProcessor(ServiceLocator.Get<IRepository>(), this.UserId);
         }
 
         public ActionResult Index()
         {
-            var test = new { Value = 15 };
-            var test2 = new JavaScriptSerializer();
-            var test3 = test2.Serialize(test);
-            var test4 = test3.Count();
+            var period = this.dateProcessor.Now;
+            this.CurrentPeriod = period;
 
-            var temp = this.db.GetAllEntriesByUserId(this.UserId);
-            var week = new Period();
-            week.Days = new List<Day>()
-            {
-                new Day(DateTime.Now.AddDays(-2), temp.Where(x=>x.Date.ToShortDateString() == DateTime.Now.AddDays(-2).ToShortDateString())),
-                new Day(DateTime.Now.AddDays(-1), temp.Where(x=>x.Date.ToShortDateString() == DateTime.Now.AddDays(-1).ToShortDateString())),
-                new Day(DateTime.Now, temp.Where(x=>x.Date.ToShortDateString() == DateTime.Now.ToShortDateString()))
-            };
-
-            this.CurrentPeriod = week;
-
-            return View(week);
+            return View(period);
         }
 
         [HttpPost]
@@ -69,19 +56,11 @@ namespace WalletInspector2.WebUI.Controllers
         {
             var currentDate = this.CurrentPeriod.Days.First().Date;
             ModelState.Remove("Date");
-            var prevDate = currentDate.AddDays(-1);
-            var temp = this.db.GetAllEntriesByUserId(this.UserId);
-            var week = new Period();
-            week.Days = new List<Day>()
-            {
-                new Day(prevDate.AddDays(-2), temp.Where(x=>x.Date.ToShortDateString() == prevDate.AddDays(-2).ToShortDateString())),
-                new Day(prevDate.AddDays(-1), temp.Where(x=>x.Date.ToShortDateString() == prevDate.AddDays(-1).ToShortDateString())),
-                new Day(prevDate, temp.Where(x=>x.Date.ToShortDateString() == prevDate.ToShortDateString()))
-            };
 
-            this.CurrentPeriod = week;
+            var period = this.dateProcessor.Previous(currentDate);
+            this.CurrentPeriod = period;
 
-            return View("~/Views/Home/DaysView.cshtml", week);
+            return View("~/Views/Home/DaysView.cshtml", period);
         }
 
         [HttpPost]
@@ -89,58 +68,51 @@ namespace WalletInspector2.WebUI.Controllers
         {
             var currentDate = this.CurrentPeriod.Days.Last().Date;
             ModelState.Remove("Date");
-            var nextDate = currentDate.AddDays(1);
-            var temp = this.db.GetAllEntriesByUserId(this.UserId);
-            var week = new Period();
-            week.Days = new List<Day>()
-            {
-                new Day(nextDate.AddDays(2), temp.Where(x=>x.Date.ToShortDateString() == nextDate.AddDays(2).ToShortDateString())),
-                new Day(nextDate.AddDays(1), temp.Where(x=>x.Date.ToShortDateString() == nextDate.AddDays(1).ToShortDateString())),
-                new Day(nextDate, temp.Where(x=>x.Date.ToShortDateString() == nextDate.ToShortDateString()))
-            };
 
-            week.Days.Reverse();
+            var period = this.dateProcessor.Next(currentDate);
+            this.CurrentPeriod = period;
 
-            this.CurrentPeriod = week;
-
-            return View("~/Views/Home/DaysView.cshtml", week);
+            return View("~/Views/Home/DaysView.cshtml", period);
         }
 
         [HttpPost]
         public JsonResult GetWeekData()
         {
-            var data = this.db.GetAllEntriesByUserId(this.UserId);
-            var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+            var curDate = this.CurrentPeriod.Days.Last().Date;
+            var data = this.dateProcessor.GetWeekData(curDate);
+            var jsonData = data.Expenses.Select(x => new { name = x.Name, y = x.TotalAmount });
 
             return new JsonResult() { Data = jsonData };
         }
 
-        //[HttpPost]
-        //public JsonResult GetMonthData()
-        //{
-        //    var data = this.db.All(1);
-        //    var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+        [HttpPost]
+        public JsonResult GetMonthData()
+        {
+            var curDate = this.CurrentPeriod.Days.Last().Date;
+            var data = this.dateProcessor.GetMonthData(curDate);
+            var jsonData = data.Expenses.Select(x => new { name = x.Name, y = x.TotalAmount });
 
-        //    return new JsonResult() { Data = jsonData };
-        //}
+            return new JsonResult() { Data = jsonData };
+        }
 
-        //[HttpPost]
-        //public JsonResult GetYearData()
-        //{
-        //    var data = this.db.All(1);
-        //    var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+        [HttpPost]
+        public JsonResult GetYearData()
+        {
+            var curDate = this.CurrentPeriod.Days.Last().Date;
+            var data = this.dateProcessor.GetYearData(curDate);
+            var jsonData = data.Tags.Select(x => new { name = x.Name, y = x.TotalAmount });
 
-        //    return new JsonResult() { Data = jsonData };
-        //}
+            return new JsonResult() { Data = jsonData };
+        }
 
-        //[HttpPost]
-        //public JsonResult GetTotalData()
-        //{
-        //    var data = this.db.All(1);
-        //    var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
+        [HttpPost]
+        public JsonResult GetTotalData()
+        {
+            var data = this.dateProcessor.GetTotalData();
+            var jsonData = data.Tags.Select(x => new { name = x.Name, y = x.TotalAmount });
 
-        //    return new JsonResult() { Data = jsonData };
-        //}
+            return new JsonResult() { Data = jsonData };
+        }
 
 
         public ActionResult About()
