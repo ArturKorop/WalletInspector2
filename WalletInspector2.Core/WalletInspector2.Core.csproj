@@ -58,15 +58,16 @@
   <ItemGroup>
     <Compile Include="Code\Data\DateProcessor.cs" />
     <Compile Include="Code\Data\Day.cs" />
-    <Compile Include="Code\Data\ExpenseData.cs" />
+    <Compile Include="Code\Data\SimpleExpenseData.cs" />
+    <Compile Include="Code\Data\FullExpenseData.cs" />
     <Compile Include="Code\Data\Period.cs" />
     <Compile Include="Code\Data\Statistics.cs" />
+    <Compile Include="Code\Data\TagEntry.cs" />
     <Compile Include="Code\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Code\Main\DataContext.cs" />
     <Compile Include="Code\Data\ExpenseEntry.cs" />
     <Compile Include="Code\Main\ServiceLocator.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

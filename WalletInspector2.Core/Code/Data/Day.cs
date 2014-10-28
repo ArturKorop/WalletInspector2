@@ -10,13 +10,14 @@ namespace WalletInspector2.Core.Code.Data
     {
         public DateTime Date { get; set; }
 
-        public List<ExpenseEntry> Expenses { get; set; }
+        public List<FullExpenseData> Expenses { get; set; }
 
-        public Day(DateTime date) : this(date, new List<ExpenseEntry>())
+        public Day(DateTime date)
+            : this(date, new List<FullExpenseData>())
         {
         }
 
-        public Day(DateTime date, IEnumerable<ExpenseEntry> expenses)
+        public Day(DateTime date, IEnumerable<FullExpenseData> expenses)
         {
             this.Date = date;
             this.Expenses = expenses.ToList();

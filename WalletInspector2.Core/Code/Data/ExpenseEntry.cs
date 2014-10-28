@@ -14,7 +14,7 @@ namespace WalletInspector2.Core.Code.Data
 
         public string Name { get; set; }
 
-        public string Tag { get; set; }
+        public int Tag { get; set; }
 
         public double Value { get; set; }
 
@@ -22,7 +22,7 @@ namespace WalletInspector2.Core.Code.Data
 
         public Guid UserId { get; set; }
 
-        public ExpenseEntry(string name, double value, string tag, DateTime date, Guid userId)
+        public ExpenseEntry(string name, double value, int tag, DateTime date, Guid userId)
         {
             this.Name = name;
             this.Value = value;
@@ -31,7 +31,7 @@ namespace WalletInspector2.Core.Code.Data
             this.UserId = userId;
         }
 
-        public ExpenseEntry(int id, string name, double value, string tag, DateTime date, Guid userId)
+        public ExpenseEntry(int id, string name, double value, int tag, DateTime date, Guid userId)
             : this(name, value, tag, date, userId)
         {
             this.Id = id;
@@ -41,12 +41,12 @@ namespace WalletInspector2.Core.Code.Data
         {
         }
 
-        public void Update(ExpenseEntry entry)
+        public void Update(FullExpenseData data, int tag)
         {
-            this.Name = entry.Name;
-            this.Value = entry.Value;
-            this.Tag = entry.Tag;
-            this.Date = entry.Date;
+            this.Name = data.Name;
+            this.Value = data.Value;
+            this.Tag = tag;
+            this.Date = data.Date;
         }
 
         public ExpenseEntry Clone()
@@ -54,9 +54,9 @@ namespace WalletInspector2.Core.Code.Data
             return new ExpenseEntry(this.Id, this.Name, this.Value, this.Tag, this.Date, this.UserId);
         }
 
-        public ExpenseData ToExpenseData()
+        public FullExpenseData ToFullExpenseData(string tag)
         {
-            return new ExpenseData { Name = this.Name, Value = this.Value, Tag = this.Tag };
+            return new FullExpenseData(this.Id, this.Name, this.Value, tag, this.Date, this.UserId);
         }
     }
 }

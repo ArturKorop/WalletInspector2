@@ -39,27 +39,27 @@ namespace WalletInspector2.Core.Code.Data
 
         public Statistics GetDayData(DateTime date)
         {
-            return new Statistics(this.repository.GetAllEntriesByDay(date, this.userId).Select(x => x.ToExpenseData()));
+            return new Statistics(this.repository.GetAllEntriesByDay(date, this.userId).Select(x => x.ToSimpleExpenseData()));
         }
 
         public Statistics GetWeekData(DateTime date)
         {
-            return new Statistics(this.repository.GetAllEntriesByWeek(date, this.userId).Select(x => x.ToExpenseData()));
+            return new Statistics(this.repository.GetAllEntriesByWeek(date, this.userId).Select(x => x.ToSimpleExpenseData()));
         }
 
         public Statistics GetMonthData(DateTime date)
         {
-            return new Statistics(this.repository.GetAllEntriesByMonth(date, this.userId).Select(x => x.ToExpenseData()));
+            return new Statistics(this.repository.GetAllEntriesByMonth(date, this.userId).Select(x => x.ToSimpleExpenseData()));
         }
 
         public Statistics GetYearData(DateTime date)
         {
-            return new Statistics(this.repository.GetAllEntriesByYear(date, this.userId).Select(x => x.ToExpenseData()));
+            return new Statistics(this.repository.GetAllEntriesByYear(date, this.userId).Select(x => x.ToSimpleExpenseData()));
         }
 
         public Statistics GetTotalData()
         {
-            return new Statistics(this.repository.GetAllEntriesByUserId(this.userId).Select(x => x.ToExpenseData()));
+            return new Statistics(this.repository.GetAllEntriesByUserId(this.userId).Select(x => x.ToSimpleExpenseData()));
         }
 
         private Period GetData(DateTime date, bool prev = true)

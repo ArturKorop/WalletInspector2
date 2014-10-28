@@ -177,11 +177,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201410141353136_InitialCreate.cs" />
-    <Compile Include="Migrations\201410141353136_InitialCreate.Designer.cs">
-      <DependentUpon>201410141353136_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\MultipleButtonAttribute.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -359,7 +354,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Day\DayExpensesView.cshtml" />
     <Content Include="Views\Expense\ExpenseView.cshtml" />
-    <Content Include="Views\Expense\EmptyView.cshtml" />
     <Content Include="Views\Home\DaysView.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -374,11 +368,6 @@
       <Project>{559bd0d4-250b-4dc7-8717-6df6d4613258}</Project>
       <Name>WalletInspector2.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410141353136_InitialCreate.resx">
-      <DependentUpon>201410141353136_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

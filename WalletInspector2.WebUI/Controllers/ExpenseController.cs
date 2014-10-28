@@ -20,7 +20,7 @@ namespace WalletInspector2.WebUI.Controllers
         }
 
         [HttpPost]
-        public void Update(ExpenseEntry entry)
+        public void Update(FullExpenseData entry)
         {
             this.db.UpdateEntry(entry);
         }

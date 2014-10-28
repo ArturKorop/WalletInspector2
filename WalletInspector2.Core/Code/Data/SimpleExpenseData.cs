@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WalletInspector2.Core.Code.Data
 {
-    public class ExpenseData
+    public class SimpleExpenseData
     {
         public string Name { get; set; }
 

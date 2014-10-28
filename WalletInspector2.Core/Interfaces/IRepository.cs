@@ -7,22 +7,22 @@ namespace WalletInspector2.Core.Interfaces
 {
     public interface IRepository
     {
-        ExpenseEntry AddEntry(ExpenseEntry entry);
+        FullExpenseData AddEntry(FullExpenseData entry);
 
         void RemoveEntryById(int id);
 
-        void UpdateEntry(ExpenseEntry entry);
+        void UpdateEntry(FullExpenseData entry);
 
-        ExpenseEntry GetEntryById(int id);
+        FullExpenseData GetEntryById(int id);
 
-        IEnumerable<ExpenseEntry> GetAllEntriesByUserId(Guid userId);
+        IEnumerable<FullExpenseData> GetAllEntriesByUserId(Guid userId);
 
-        IEnumerable<ExpenseEntry> GetAllEntriesByDay(DateTime day, Guid userId);
+        IEnumerable<FullExpenseData> GetAllEntriesByDay(DateTime day, Guid userId);
 
-        IEnumerable<ExpenseEntry> GetAllEntriesByWeek(DateTime week, Guid userId);
+        IEnumerable<FullExpenseData> GetAllEntriesByWeek(DateTime week, Guid userId);
 
-        IEnumerable<ExpenseEntry> GetAllEntriesByMonth(DateTime month, Guid userId);
+        IEnumerable<FullExpenseData> GetAllEntriesByMonth(DateTime month, Guid userId);
 
-        IEnumerable<ExpenseEntry> GetAllEntriesByYear(DateTime year, Guid userId);
+        IEnumerable<FullExpenseData> GetAllEntriesByYear(DateTime year, Guid userId);
     }
 }

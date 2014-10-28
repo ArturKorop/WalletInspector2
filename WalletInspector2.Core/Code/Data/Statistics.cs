@@ -14,7 +14,7 @@ namespace WalletInspector2.Core.Code.Data
 
         public List<ExpenseStatistics> Expenses { get; private set; }
 
-        public Statistics(IEnumerable<ExpenseData> data)
+        public Statistics(IEnumerable<SimpleExpenseData> data)
         {
             this.Tags = new List<TagStatistics>();
             this.Expenses = new List<ExpenseStatistics>();
@@ -26,7 +26,7 @@ namespace WalletInspector2.Core.Code.Data
             }
         }
 
-        private void UpdateTags(ExpenseData expense)
+        private void UpdateTags(SimpleExpenseData expense)
         {
             var tag = this.Tags.SingleOrDefault(x => x.Name == expense.Tag);
             if (tag == null)
@@ -46,7 +46,7 @@ namespace WalletInspector2.Core.Code.Data
             tag.TotalAmount += expense.Value;
         }
 
-        private void UpdateExpenses(ExpenseData expense)
+        private void UpdateExpenses(SimpleExpenseData expense)
         {
             var exp = this.Expenses.SingleOrDefault(x => x.Name == expense.Name);
             if (exp == null)

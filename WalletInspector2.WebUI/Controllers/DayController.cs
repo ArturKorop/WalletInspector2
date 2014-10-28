@@ -31,7 +31,7 @@ namespace WalletInspector2.WebUI.Controllers
 
         public ActionResult Add(string inputName, double inputValue, string inputTag, DateTime date)
         {
-            var expense = new ExpenseEntry(inputName, inputValue, inputTag, date, this.User.Id());
+            var expense = new FullExpenseData(inputName, inputValue, inputTag ?? string.Empty, date, this.User.Id());
             var result = this.db.AddEntry(expense);
 
             return PartialView("~/Views/Expense/ExpenseView.cshtml", result);
