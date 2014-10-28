@@ -90,7 +90,7 @@ namespace WalletInspector2.WebUI.Controllers
         {
             var curDate = this.CurrentPeriod.Days.Last().Date;
             var data = this.dateProcessor.GetMonthData(curDate);
-            var jsonData = data.Expenses.Select(x => new { name = x.Name, y = x.TotalAmount });
+            var jsonData = data.Tags;//.Expenses.Select(x => new { name = x.Name, y = x.TotalAmount });
 
             return new JsonResult() { Data = jsonData };
         }

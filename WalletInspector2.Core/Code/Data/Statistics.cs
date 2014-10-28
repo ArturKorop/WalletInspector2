@@ -35,7 +35,14 @@ namespace WalletInspector2.Core.Code.Data
                 this.Tags.Add(tag);
             }
 
-            tag.ExpenseNames.Add(expense.Name);
+            var curExpense = tag.Expenses.SingleOrDefault(x => x.Name == expense.Name);
+            if(curExpense == null)
+            {
+                curExpense = new ExpenseStatistics { Name = expense.Name };
+                tag.Expenses.Add(curExpense);
+            }
+
+            curExpense.TotalAmount += expense.Value;
             tag.TotalAmount += expense.Value;
         }
 
@@ -55,13 +62,13 @@ namespace WalletInspector2.Core.Code.Data
         {
             public string Name { get; set; }
 
-            public List<string> ExpenseNames { get; set; }
+            public List<ExpenseStatistics> Expenses { get; set; }
 
             public double TotalAmount { get; set; }
 
             public TagStatistics()
             {
-                this.ExpenseNames = new List<string>();
+                this.Expenses = new List<ExpenseStatistics>();
             }
         }
 

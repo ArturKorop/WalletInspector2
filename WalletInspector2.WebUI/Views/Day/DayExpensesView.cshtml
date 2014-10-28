@@ -27,7 +27,7 @@
                     }
                 </div>
                 <div>
-                    @using (Ajax.BeginForm("Add", "Day", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = currentPlaceForNewEntry, OnSuccess = "onSuccess" }))
+                    @using (Ajax.BeginForm("Add", "Day", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = currentPlaceForNewEntry, OnSuccess = "onSuccessAddExpense" }))
                     {
                         <table>
                             <tr>
