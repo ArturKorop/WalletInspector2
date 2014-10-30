@@ -23,7 +23,7 @@ namespace WalletInspector2.Core.Code.Main
 
         public FullExpenseData AddEntry(FullExpenseData expenseData)
         {
-            var tag = this.GetTagId(expenseData.Tag);
+            var tag = this.GetTagId(expenseData.Tag, expenseData.UserId);
             var expenseEntry = expenseData.ToExpenseEntry(tag);
             this.Entries.Add(expenseEntry);
             this.SaveChanges();
@@ -35,7 +35,7 @@ namespace WalletInspector2.Core.Code.Main
         public void UpdateEntry(FullExpenseData expenseData)
         {
             var updatingEntry = this.Entries.Single(x => x.Id == expenseData.Id);
-            var tagId = this.GetTagId(expenseData.Tag);
+            var tagId = this.GetTagId(expenseData.Tag, updatingEntry.UserId);
 
             updatingEntry.Update(expenseData, tagId);
             this.SaveChanges();
@@ -56,11 +56,12 @@ namespace WalletInspector2.Core.Code.Main
             var removingEntry = this.Entries.SingleOrDefault(x => x.Id == id);
             if (removingEntry != null)
             {
+                var userId = removingEntry.UserId;
                 var tagId = removingEntry.Tag;
                 this.Entries.Remove(removingEntry);
                 this.SaveChanges();
 
-                var isRemoveTag = this.Entries.Any(x => x.Tag == tagId);
+                var isRemoveTag = !this.MyEntries(userId).Any(x => x.Tag == tagId);
                 if(isRemoveTag)
                 {
                     this.Tags.Remove(this.Tags.Single(x=>x.Id == tagId));
@@ -79,27 +80,27 @@ namespace WalletInspector2.Core.Code.Main
 
         public IEnumerable<FullExpenseData> GetAllEntriesByUserId(Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId).Select(x=> x.ToFullExpenseData(this.GetTagName(x.Tag))).ToList();
+            return this.MyEntries(userId).Select(x=> x.ToFullExpenseData(this.GetTagName(x.Tag))).ToList();
         }
 
         public IEnumerable<FullExpenseData> GetAllEntriesByDay(DateTime day, Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId).ToList().Where(x => x.Date.IsSameDay(day)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
+            return this.MyEntries(userId).Where(x => x.Date.IsSameDay(day)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
         }
 
         public IEnumerable<FullExpenseData> GetAllEntriesByWeek(DateTime week, Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId).ToList().Where(x => x.Date.IsSameWeek(week)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
+            return this.MyEntries(userId).Where(x => x.Date.IsSameWeek(week)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
         }
 
         public IEnumerable<FullExpenseData> GetAllEntriesByMonth(DateTime month, Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId).ToList().Where(x => x.Date.IsSameMonth(month)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
+            return this.MyEntries(userId).Where(x => x.Date.IsSameMonth(month)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
         }
 
         public IEnumerable<FullExpenseData> GetAllEntriesByYear(DateTime year, Guid userId)
         {
-            return this.Entries.Where(x => x.UserId == userId).ToList().Where(x => x.Date.IsSameYear(year)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
+            return this.MyEntries(userId).Where(x => x.Date.IsSameYear(year)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
         }
 
         private string GetTagName(int id)
@@ -109,16 +110,31 @@ namespace WalletInspector2.Core.Code.Main
             return tag.Name;
         }
 
-        private int GetTagId(string name)
+        private int GetTagId(string name, Guid userId)
         {
-            var tag = this.Tags.SingleOrDefault(x => x.Name == name);
+            var tag = this.MyTags(userId).SingleOrDefault(x => x.Name == name);
             if(tag == null)
             {
-                tag = this.Tags.Add(new TagEntry(name));
+                tag = this.Tags.Add(new TagEntry(name, userId));
                 this.SaveChanges();
             }
 
             return tag.Id;
+        }
+
+        public IEnumerable<string> GetAllTagsByUserId(Guid userId)
+        {
+            return this.Tags.Where(x => x.UserId == userId).Select(x=>x.Name);
+        }
+
+        private List<ExpenseEntry> MyEntries(Guid userID)
+        {
+            return this.Entries.Where(x => x.UserId == userID).ToList();
+        }
+
+        private List<TagEntry> MyTags(Guid userID)
+        {
+            return this.Tags.Where(x => x.UserId == userID).ToList();
         }
     }
 }

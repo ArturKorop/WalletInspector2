@@ -119,3 +119,8 @@ textarea {
         height:96%;
         padding: 2%;
     }
+
+    ul.ui-autocomplete.ui-menu
+    {
+        font-size: 0.5em;
+    }

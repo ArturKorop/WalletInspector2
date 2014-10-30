@@ -16,7 +16,13 @@ namespace WalletInspector2.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private DateProcessor dateProcessor;
+        private DataProcessor DataProc
+        {
+            get
+            {
+                return new DataProcessor(ServiceLocator.Get<IRepository>(), this.UserId);
+            }
+        }
 
         private Guid UserId
         {
@@ -38,15 +44,11 @@ namespace WalletInspector2.WebUI.Controllers
             }
         }
 
-        public HomeController()
-        {
-            this.dateProcessor = new DateProcessor(ServiceLocator.Get<IRepository>(), this.UserId);
-        }
-
         public ActionResult Index()
         {
-            var period = this.dateProcessor.Now;
+            var period = this.DataProc.Now;
             this.CurrentPeriod = period;
+            this.UpdateUsefulTagsAndItems();
 
             return View(period);
         }
@@ -57,8 +59,9 @@ namespace WalletInspector2.WebUI.Controllers
             var currentDate = this.CurrentPeriod.Days.First().Date;
             ModelState.Remove("Date");
 
-            var period = this.dateProcessor.Previous(currentDate);
+            var period = this.DataProc.Previous(currentDate);
             this.CurrentPeriod = period;
+            this.UpdateUsefulTagsAndItems();
 
             return View("~/Views/Home/DaysView.cshtml", period);
         }
@@ -69,17 +72,23 @@ namespace WalletInspector2.WebUI.Controllers
             var currentDate = this.CurrentPeriod.Days.Last().Date;
             ModelState.Remove("Date");
 
-            var period = this.dateProcessor.Next(currentDate);
+            var period = this.DataProc.Next(currentDate);
             this.CurrentPeriod = period;
+            this.UpdateUsefulTagsAndItems();
 
             return View("~/Views/Home/DaysView.cshtml", period);
         }
+
+        //[HttpPost]
+        //public ActionResult TotalMonthStatistic(DateTime month)
+        //{
+        //}
 
         [HttpPost]
         public JsonResult GetWeekData()
         {
             var curDate = this.CurrentPeriod.Days.Last().Date;
-            var data = this.dateProcessor.GetWeekData(curDate);
+            var data = this.DataProc.GetWeekData(curDate);
             var jsonData = data.Expenses.Select(x => new { name = x.Name, y = x.TotalAmount });
 
             return new JsonResult() { Data = jsonData };
@@ -89,17 +98,32 @@ namespace WalletInspector2.WebUI.Controllers
         public JsonResult GetMonthData()
         {
             var curDate = this.CurrentPeriod.Days.Last().Date;
-            var data = this.dateProcessor.GetMonthData(curDate);
-            var jsonData = data.Tags;//.Expenses.Select(x => new { name = x.Name, y = x.TotalAmount });
+            var data = this.DataProc.GetMonthData(curDate);
+            var jsonData = data.Tags;
 
             return new JsonResult() { Data = jsonData };
+        }
+
+        [HttpPost]
+        public JsonResult GetMonthAndWeekData()
+        {
+            var curDate = this.CurrentPeriod.Days.Last().Date;
+            var weekData = this.DataProc.GetWeekData(curDate);
+            var jsonWeekData = weekData.Expenses.Select(x => new { name = x.Name, y = x.TotalAmount });
+            var totalWeekAmount = weekData.Expenses.Sum(x => x.TotalAmount);
+
+            var monthData = this.DataProc.GetMonthData(curDate);
+            var jsonMonthData = monthData.Tags;
+            var totalMonthAmount = monthData.Expenses.Sum(x => x.TotalAmount);
+
+            return new JsonResult() { Data = new { week = new { data = jsonWeekData, value = totalWeekAmount }, month = new { data = jsonMonthData, value = totalMonthAmount } } };
         }
 
         [HttpPost]
         public JsonResult GetYearData()
         {
             var curDate = this.CurrentPeriod.Days.Last().Date;
-            var data = this.dateProcessor.GetYearData(curDate);
+            var data = this.DataProc.GetYearData(curDate);
             var jsonData = data.Tags.Select(x => new { name = x.Name, y = x.TotalAmount });
 
             return new JsonResult() { Data = jsonData };
@@ -108,12 +132,11 @@ namespace WalletInspector2.WebUI.Controllers
         [HttpPost]
         public JsonResult GetTotalData()
         {
-            var data = this.dateProcessor.GetTotalData();
+            var data = this.DataProc.GetTotalData();
             var jsonData = data.Tags.Select(x => new { name = x.Name, y = x.TotalAmount });
 
             return new JsonResult() { Data = jsonData };
         }
-
 
         public ActionResult About()
         {
@@ -127,6 +150,11 @@ namespace WalletInspector2.WebUI.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        private void UpdateUsefulTagsAndItems()
+        {
+            this.ViewBag.Tags = this.DataProc.GetTags();
         }
     }
 }

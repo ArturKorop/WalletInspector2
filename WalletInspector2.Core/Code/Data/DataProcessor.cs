@@ -7,13 +7,13 @@ using WalletInspector2.Core.Interfaces;
 
 namespace WalletInspector2.Core.Code.Data
 {
-    public class DateProcessor
+    public class DataProcessor
     {
         private IRepository repository;
 
         private Guid userId;
 
-        public DateProcessor(IRepository repository, Guid userId)
+        public DataProcessor(IRepository repository, Guid userId)
         {
             this.repository = repository;
             this.userId = userId;
@@ -60,6 +60,11 @@ namespace WalletInspector2.Core.Code.Data
         public Statistics GetTotalData()
         {
             return new Statistics(this.repository.GetAllEntriesByUserId(this.userId).Select(x => x.ToSimpleExpenseData()));
+        }
+
+        public IEnumerable<string> GetTags()
+        {
+            return this.repository.GetAllTagsByUserId(this.userId);
         }
 
         private Period GetData(DateTime date, bool prev = true)

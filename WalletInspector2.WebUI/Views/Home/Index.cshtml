@@ -1,6 +1,8 @@
 ﻿@model WalletInspector2.Core.Code.Data.Period
 @{
     ViewBag.Title = "Home Page";
+    var tags = (ViewBag.Tags as IEnumerable<string>).ToArray();
+    var jsonTags = Json.Encode(tags);
 }
 
 @Scripts.Render("~/bundles/main")
@@ -9,6 +11,7 @@
     $(document).ready(function () {
         UpdateButtons();
         UpdatePrevNextButtons();
+        UpdateAutocomplete(JSON.parse('@Html.Raw(jsonTags)'));
     })
 </script>
 

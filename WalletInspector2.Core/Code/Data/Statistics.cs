@@ -24,6 +24,9 @@ namespace WalletInspector2.Core.Code.Data
                 this.UpdateTags(expense);
                 this.UpdateExpenses(expense);
             }
+
+            this.Tags.Sort((a, b) => a.Name.CompareTo(b.Name));
+            this.Expenses.Sort((a, b) => a.Name.CompareTo(b.Name));
         }
 
         private void UpdateTags(SimpleExpenseData expense)

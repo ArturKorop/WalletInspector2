@@ -16,14 +16,17 @@ namespace WalletInspector2.Core.Code.Data
 
         public string Name { get; set; }
 
+        public Guid UserId { get; set; }
+
         public TagEntry()
         {
 
         }
 
-        public TagEntry(string name) : this()
+        public TagEntry(string name, Guid userId) : this()
         {
             this.Name = name;
+            this.UserId = userId;
         }
     }
 }
