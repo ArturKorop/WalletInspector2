@@ -30,6 +30,10 @@
                 <button type="submit" value="Next" id="ButtonNext" />
             }
         </div>
+
+        <div>
+            @Html.ActionLink("Year statistic", "Year", "Statistic", new { year = Model.Days.Last().Date.Year }, null)
+        </div>
     </div>
 
     <div class="row" id="daysView">

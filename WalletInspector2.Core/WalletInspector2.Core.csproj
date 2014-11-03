@@ -64,6 +64,7 @@
     <Compile Include="Code\Data\Period.cs" />
     <Compile Include="Code\Data\Statistics.cs" />
     <Compile Include="Code\Data\TagEntry.cs" />
+    <Compile Include="Code\Data\YearStatisticData.cs" />
     <Compile Include="Code\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Code\Main\DataContext.cs" />
     <Compile Include="Code\Data\ExpenseEntry.cs" />

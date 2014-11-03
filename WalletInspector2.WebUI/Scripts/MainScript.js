@@ -261,9 +261,22 @@ function UpdateWeekChart(result) {
 }
 
 function UpdateAutocomplete(dataTags) {
-    $('.InputTagClass').autocomplete(
+    $(".InputTagClass").autocomplete(
         {
-            source: dataTags,
+            source: function (request, response) {
+                var term = $.ui.autocomplete.escapeRegex(request.term)
+                    , startsWithMatcher = new RegExp("^" + term, "i")
+                    , startsWith = $.grep(dataTags, function (value) {
+                        return startsWithMatcher.test(value.label || value.value || value);
+                    })
+                    , containsMatcher = new RegExp(term, "i")
+                    , contains = $.grep(dataTags, function (value) {
+                        return $.inArray(value, startsWith) < 0 &&
+                            containsMatcher.test(value.label || value.value || value);
+                    });
+
+                response(startsWith.concat(contains));
+            },
             autoFocus: true
         });
 }

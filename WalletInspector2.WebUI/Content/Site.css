@@ -124,3 +124,12 @@ textarea {
     {
         font-size: 0.5em;
     }
+
+    #MonthsStat{
+        float:left;
+        margin: 1em;
+    }
+
+    #MonthsStat table tr td{
+        padding: 2px;
+    }

@@ -57,6 +57,19 @@ namespace WalletInspector2.Core.Code.Data
             return new Statistics(this.repository.GetAllEntriesByYear(date, this.userId).Select(x => x.ToSimpleExpenseData()));
         }
 
+        public Statistics[] GetMontsPerYearData(DateTime date)
+        {
+            var data = this.repository.GetAllEntiresInMonthsPerYear(date, this.userId);
+            var result = new Statistics[12];
+
+            for (int i = 0; i < 12; i++)
+            {
+                result[i] = new Statistics(data[i].Select(x=>x.ToSimpleExpenseData()));
+            }
+
+            return result;
+        }
+
         public Statistics GetTotalData()
         {
             return new Statistics(this.repository.GetAllEntriesByUserId(this.userId).Select(x => x.ToSimpleExpenseData()));

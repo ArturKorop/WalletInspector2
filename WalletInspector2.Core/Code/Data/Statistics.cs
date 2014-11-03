@@ -14,6 +14,8 @@ namespace WalletInspector2.Core.Code.Data
 
         public List<ExpenseStatistics> Expenses { get; private set; }
 
+        public double TotalValue { get; set; }
+
         public Statistics(IEnumerable<SimpleExpenseData> data)
         {
             this.Tags = new List<TagStatistics>();
@@ -27,6 +29,7 @@ namespace WalletInspector2.Core.Code.Data
 
             this.Tags.Sort((a, b) => a.Name.CompareTo(b.Name));
             this.Expenses.Sort((a, b) => a.Name.CompareTo(b.Name));
+            this.TotalValue = this.Expenses.Sum(x => x.TotalAmount); ;
         }
 
         private void UpdateTags(SimpleExpenseData expense)

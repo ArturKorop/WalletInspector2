@@ -1,0 +1,31 @@
+﻿@model WalletInspector2.Core.Code.Data.YearStatisticData
+@{
+    ViewBag.Title = Model.Name;
+}
+
+@Scripts.Render("~/bundles/stat")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ShowMonthsChart(1);
+    })
+</script>
+
+<div id="YearStat">
+    <div id="MonthsStat">
+        <div>
+            Year - @Model.Name
+        </div>
+        <table>
+            @foreach (var month in Model.Months)
+            {
+                <tr>
+                    <td>@month.Number</td>
+                    <td>@month.Name</td>
+                    <td>@month.TotalValue</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

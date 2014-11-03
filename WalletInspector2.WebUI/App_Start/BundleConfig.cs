@@ -22,6 +22,9 @@ namespace WalletInspector2.WebUI
             bundles.Add(new ScriptBundle("~/bundles/main").Include(
                         "~/Scripts/MainScript.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/stat").Include(
+                        "~/Scripts/StatScript.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
                         "~/Scripts/highcharts/highcharts.js",
                         "~/Scripts/highcharts/modules/exporting.js"));

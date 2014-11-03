@@ -85,22 +85,35 @@ namespace WalletInspector2.Core.Code.Main
 
         public IEnumerable<FullExpenseData> GetAllEntriesByDay(DateTime day, Guid userId)
         {
-            return this.MyEntries(userId).Where(x => x.Date.IsSameDay(day)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
+            return this.MyEntries(userId).Where(x => x.Date.IsSameDay(day)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag))).ToList();
         }
 
         public IEnumerable<FullExpenseData> GetAllEntriesByWeek(DateTime week, Guid userId)
         {
-            return this.MyEntries(userId).Where(x => x.Date.IsSameWeek(week)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
+            return this.MyEntries(userId).Where(x => x.Date.IsSameWeek(week)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag))).ToList();
         }
 
         public IEnumerable<FullExpenseData> GetAllEntriesByMonth(DateTime month, Guid userId)
         {
-            return this.MyEntries(userId).Where(x => x.Date.IsSameMonth(month)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
+            return this.MyEntries(userId).Where(x => x.Date.IsSameMonth(month)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag))).ToList();
         }
 
         public IEnumerable<FullExpenseData> GetAllEntriesByYear(DateTime year, Guid userId)
         {
-            return this.MyEntries(userId).Where(x => x.Date.IsSameYear(year)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag)));
+            return this.MyEntries(userId).Where(x => x.Date.IsSameYear(year)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag))).ToList();
+        }
+
+        public IEnumerable<FullExpenseData>[] GetAllEntiresInMonthsPerYear(DateTime year, Guid userId)
+        {
+            var result = new IEnumerable<FullExpenseData>[12];
+            var data = this.GetAllEntriesByYear(year, userId);
+
+            for (int i = 1; i <= 12; i++)
+            {
+                result[i - 1] = data.Where(x => x.Date.Month == i).ToList();
+            }
+
+            return result;
         }
 
         private string GetTagName(int id)

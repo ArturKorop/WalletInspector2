@@ -25,6 +25,8 @@ namespace WalletInspector2.Core.Interfaces
 
         IEnumerable<FullExpenseData> GetAllEntriesByYear(DateTime year, Guid userId);
 
+        IEnumerable<FullExpenseData>[] GetAllEntiresInMonthsPerYear(DateTime year, Guid userId);
+
         IEnumerable<string> GetAllTagsByUserId(Guid userId);
     }
 }

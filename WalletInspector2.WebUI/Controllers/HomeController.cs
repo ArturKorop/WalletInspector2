@@ -79,11 +79,6 @@ namespace WalletInspector2.WebUI.Controllers
             return View("~/Views/Home/DaysView.cshtml", period);
         }
 
-        //[HttpPost]
-        //public ActionResult TotalMonthStatistic(DateTime month)
-        //{
-        //}
-
         [HttpPost]
         public JsonResult GetWeekData()
         {
