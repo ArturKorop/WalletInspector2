@@ -1,20 +1,26 @@
 ﻿@model WalletInspector2.Core.Code.Data.YearStatisticData
 @{
     ViewBag.Title = Model.Name;
+    var jsonDataMonthesPerYearData = Json.Encode(Model.Months);
+    var jsonFullYearData = Json.Encode(Model.Data);
 }
 
+@Scripts.Render("~/bundles/highcharts")
 @Scripts.Render("~/bundles/stat")
 
 <script type="text/javascript">
     $(document).ready(function () {
-        ShowMonthsChart(1);
+        var monthesPerYearData = JSON.parse('@Html.Raw(jsonDataMonthesPerYearData)')
+        var fullYearData = JSON.parse('@Html.Raw(jsonFullYearData)')
+        ShowMonthsChart(monthesPerYearData);
+        ShowFullYearChart(fullYearData);
     })
 </script>
 
 <div id="YearStat">
     <div id="MonthsStat">
         <div>
-            Year - @Model.Name
+            Year - @Model.Name - @Model.TotalValue
         </div>
         <table>
             @foreach (var month in Model.Months)
@@ -27,5 +33,7 @@
             }
         </table>
     </div>
+    <div id="FullYearStat"></div>
+    <div id="YearPerMonthStat"></div>
 </div>
 

@@ -128,8 +128,26 @@ textarea {
     #MonthsStat{
         float:left;
         margin: 1em;
+        font-size: .7em;
     }
 
     #MonthsStat table tr td{
         padding: 2px;
+    }
+
+    #YearPerMonthStat{
+        height: 60%;
+        width: 30%;
+        float: left;
+    }
+
+    #FullYearStat{
+        height: 100%;
+        width: 70%;
+        float: right;
+    }
+
+    #YearStat{
+        height: 100%;
+        width: 100%;
     }
