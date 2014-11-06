@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -32,19 +33,13 @@ namespace WalletInspector2.WebUI.Controllers
         public ActionResult Year(int? year)
         {
             var curYear = year.HasValue ? year.Value : DateTime.Now.Year;
-
+            var curYearDate = new DateTime(curYear, 1, 1);
             var yearStat = new YearStatisticData();
             yearStat.Name = curYear;
-            yearStat.Data = this.DataProc.GetYearData(DateTime.Now);
+            yearStat.Data = this.DataProc.GetYearData(curYearDate);
             yearStat.TotalValue = yearStat.Data.TotalValue;
-            //for (int i = 1; i <= 12; i++)
-            //{
-            //    var monthSimpleStat = this.DataProc.GetMonthData(new DateTime(DateTime.Now.Year, i, 1));
-            //    DateTimeFormatInfo mfi = new DateTimeFormatInfo();
-            //    var monthName = mfi.GetMonthName(i);
-            //    yearStat.Months[i - 1] = new YearStatisticData.MonthSimpleStatistic { Number = i, Name = monthName, TotalValue = monthSimpleStat.TotalValue };
-            //}
-            var monthsData = this.DataProc.GetMontsPerYearData(DateTime.Now);
+            var monthsData = this.DataProc.GetMontsPerYearData(curYearDate);
+
             for (int i = 0; i < 12; i++)
             {
                 var monthNumber = i + 1;
@@ -54,6 +49,20 @@ namespace WalletInspector2.WebUI.Controllers
             }
 
             return View(yearStat);
+        }
+
+        public ActionResult Month(int year, int month)
+        {
+            var monthStat = this.DataProc.GetMonthData(new DateTime(year, month, 1));
+            DateTimeFormatInfo mfi = new DateTimeFormatInfo();
+            var monthName = mfi.GetMonthName(month);
+            dynamic source = new ExpandoObject();
+            source.Name = monthName;
+            source.Data = monthStat;
+            source.Year = year;
+            source.Month = month;
+
+            return View(source);
         }
     }
 }

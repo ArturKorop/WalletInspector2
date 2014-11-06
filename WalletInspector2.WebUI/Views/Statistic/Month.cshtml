@@ -1,0 +1,28 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = Model.Name;
+    var jsonData = Json.Encode(Model.Data);
+    var prevMonth = new DateTime(Model.Year, Model.Month, 1).AddMonths(-1);
+    var nextMonth = new DateTime(Model.Year, Model.Month, 1).AddMonths(1);
+}
+
+@Scripts.Render("~/bundles/highcharts")
+@Scripts.Render("~/bundles/stat")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var fullMonthData = JSON.parse('@Html.Raw(jsonData)')
+        ShowFullMonthChart(fullMonthData, '@Model.Name');
+    });
+</script>
+
+<div style="height: 100%;width: 100%;">
+    <div style="float:left;">
+        <div>@Html.ActionLink("Previous", "Month", "Statistic", new { year = prevMonth.Year, month = prevMonth.Month }, null)</div>
+        <div>
+            @Html.ActionLink("Next", "Month", "Statistic", new { year = nextMonth.Year, month = nextMonth.Month }, null)</div>
+        <div>
+            @Html.ActionLink(((int)Model.Year).ToString(), "Year", "Statistic", new { year = Model.Year }, null)</div>
+    </div>
+    <div id="fullMonthStat" />
+</div>

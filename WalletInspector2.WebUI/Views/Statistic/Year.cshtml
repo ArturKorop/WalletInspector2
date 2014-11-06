@@ -20,14 +20,16 @@
 <div id="YearStat">
     <div id="MonthsStat">
         <div>
-            Year - @Model.Name - @Model.TotalValue
+           <div style="float:left">@Html.ActionLink("Previous", "Year", "Statistic", new { year = Model.Name - 1 }, null)</div>
+           <div style="float:left">Year - @Model.Name - @Model.TotalValue</div>
+           <div style="float:none">@Html.ActionLink("Next", "Year", "Statistic", new { year = Model.Name + 1 }, null)</div>
         </div>
         <table>
             @foreach (var month in Model.Months)
             {
                 <tr>
                     <td>@month.Number</td>
-                    <td>@month.Name</td>
+                    <td>@Html.ActionLink(month.Name, "Month", new { year = Model.Name, month = month.Number })</td>
                     <td>@month.TotalValue</td>
                 </tr>
             }
