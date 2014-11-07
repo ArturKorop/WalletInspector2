@@ -149,5 +149,15 @@ namespace WalletInspector2.Core.Code.Main
         {
             return this.Tags.Where(x => x.UserId == userID).ToList();
         }
+
+        public IEnumerable<FullExpenseData> GetAllEntryByName(string name, Guid userId)
+        {
+            return this.MyEntries(userId).Where(x => x.Name == name).Select(x=>x.ToFullExpenseData(this.GetTagName(x.Tag))).ToList();
+        }
+
+        public IEnumerable<FullExpenseData> GetAllEntryByTag(string tag, Guid userId)
+        {
+            return this.MyEntries(userId).Where(x => x.Tag == this.GetTagId(tag, userId)).Select(x => x.ToFullExpenseData(this.GetTagName(x.Tag))).ToList();
+        }
     }
 }

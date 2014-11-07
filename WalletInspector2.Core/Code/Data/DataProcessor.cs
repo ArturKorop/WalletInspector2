@@ -27,6 +27,11 @@ namespace WalletInspector2.Core.Code.Data
             }
         }
 
+        public Period Period(DateTime date)
+        {
+            return this.GetData(date);
+        }
+
         public Period Previous(DateTime date)
         {
             return this.GetData(date.AddDays(-1));
@@ -78,6 +83,16 @@ namespace WalletInspector2.Core.Code.Data
         public IEnumerable<string> GetTags()
         {
             return this.repository.GetAllTagsByUserId(this.userId);
+        }
+
+        public IEnumerable<FullExpenseData> GetDataByName(string name)
+        {
+            return this.repository.GetAllEntryByName(name, this.userId);
+        }
+
+        public IEnumerable<FullExpenseData> GetDataByTag(string tag)
+        {
+            return this.repository.GetAllEntryByTag(tag, this.userId);
         }
 
         private Period GetData(DateTime date, bool prev = true)

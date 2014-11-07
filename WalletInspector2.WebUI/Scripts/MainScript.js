@@ -127,6 +127,9 @@ function UpdateMonthChart (result) {
             plotShadow: false,
             type: 'pie'
         },
+        exporting:{
+            enabled: false
+        },
         title: {
             text: 'Month: ' + result.value
         },

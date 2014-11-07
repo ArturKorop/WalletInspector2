@@ -23,6 +23,9 @@
             @Html.ActionLink("Next", "Month", "Statistic", new { year = nextMonth.Year, month = nextMonth.Month }, null)</div>
         <div>
             @Html.ActionLink(((int)Model.Year).ToString(), "Year", "Statistic", new { year = Model.Year }, null)</div>
+        <div>
+            @Html.ActionLink("Edit", "Period", "Home", new { date = new DateTime(Model.Year, Model.Month, 1) }, null)
+        </div>
     </div>
     <div id="fullMonthStat" />
 </div>

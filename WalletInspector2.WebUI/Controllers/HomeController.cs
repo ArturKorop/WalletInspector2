@@ -53,6 +53,15 @@ namespace WalletInspector2.WebUI.Controllers
             return View(period);
         }
 
+        public ActionResult Period(DateTime date)
+        {
+            var period = this.DataProc.Period(date);
+            this.CurrentPeriod = period;
+            this.UpdateUsefulTagsAndItems();
+
+            return View("~/Views/Home/Index.cshtml", period);
+        }
+
         [HttpPost]
         public ActionResult Previous()
         {
@@ -131,6 +140,27 @@ namespace WalletInspector2.WebUI.Controllers
             var jsonData = data.Tags.Select(x => new { name = x.Name, y = x.TotalAmount });
 
             return new JsonResult() { Data = jsonData };
+        }
+
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
+        public ActionResult GetEditDataByName(string name)
+        {
+            var data = this.DataProc.GetDataByName(name);
+            this.UpdateUsefulTagsAndItems();
+
+            return View("~/Views/Home/EditItems.cshtml", data);
+        }
+
+        public ActionResult GetEditDataByTag(string tag)
+        {
+            var data = this.DataProc.GetDataByTag(tag);
+            this.UpdateUsefulTagsAndItems();
+
+            return View("~/Views/Home/EditItems.cshtml", data);
         }
 
         public ActionResult About()

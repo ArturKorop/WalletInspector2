@@ -1,11 +1,6 @@
 ﻿@model  WalletInspector2.Core.Code.Data.Period
 @{
     Layout = null;
-    var data = this.Model.Days.First().Expenses;
-
-    var jsonData = data.Select(x => new { name = x.Name, y = x.Value });
-    var mdata = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(jsonData);
-
 }
 
 @Scripts.Render("~/bundles/highcharts")

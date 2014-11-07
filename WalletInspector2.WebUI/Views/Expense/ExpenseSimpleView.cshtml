@@ -1,0 +1,28 @@
+﻿@model WalletInspector2.Core.Code.Data.FullExpenseData
+@{
+    Layout = null;
+    var id = Model.Id.ToString();
+    var objectId = "Expense" + id;
+}
+
+<div id="@objectId" style="display:table">
+    <div style="display:table-cell">
+        @using (Ajax.BeginForm("Update", "Expense", new AjaxOptions { HttpMethod = "Post" }))
+        {
+            @Html.HiddenFor(x => x.Id);
+            @Html.HiddenFor(x => x.UserId);
+            @Html.HiddenFor(x => x.Date);
+            @Html.TextBoxFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Value)
+            @Html.TextBoxFor(x => x.Tag)
+            <button type="submit" value="Update" class="updateButton" style="width:1em;height:1em" />
+        }
+    </div>
+    <div style="display:table-cell">
+        @using (Ajax.BeginForm("Remove", "Expense", null, new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = objectId }, new { @id = "Form" + Model.Id.ToString() }))
+        {
+            @Html.HiddenFor(x => x.Id);
+            <button type="submit" value="Remove" class="removeButton" style="width:1em;height:1em" />
+        }
+    </div>
+</div>

@@ -359,6 +359,9 @@
     <Content Include="Views\Home\DaysView.cshtml" />
     <Content Include="Views\Statistic\Year.cshtml" />
     <Content Include="Views\Statistic\Month.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Home\EditItems.cshtml" />
+    <Content Include="Views\Expense\ExpenseSimpleView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

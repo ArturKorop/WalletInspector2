@@ -1,0 +1,14 @@
+﻿@model  IEnumerable<WalletInspector2.Core.Code.Data.FullExpenseData>
+@{
+    Layout = null;
+    int i = 0;
+}
+
+<div id="DayView">
+    @foreach (var expense in Model)
+    {
+        i++;
+        <div style="float:left;width: 4em;">@i</div>
+        <div>@Html.Partial("~/Views/Expense/ExpenseSimpleView.cshtml", expense)</div>
+    }
+</div>

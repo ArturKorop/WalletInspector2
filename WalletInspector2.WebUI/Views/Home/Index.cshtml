@@ -37,8 +37,12 @@
             @Html.ActionLink("Year statistic", "Year", "Statistic", new { year = Model.Days.Last().Date.Year }, null)
         </div>
 
-        <div style="float:none;">
+        <div style="float:left; margin: 0 5px 0 5px;">
             @Html.ActionLink("Month statistic", "Month", "Statistic", new { year = lastDay.Date.Year, month = lastDay.Date.Month }, null)
+        </div>
+
+        <div style="float:none;">
+            @Html.ActionLink("Edit", "Edit", "Home")
         </div>
 
     </div>
@@ -48,7 +52,7 @@
     </div>
 </div>
 
-<div id="monthStat" style="font-size: 5px;"></div>
+<div id="monthStat"></div>
 <div id="weekStat"></div>
 
 

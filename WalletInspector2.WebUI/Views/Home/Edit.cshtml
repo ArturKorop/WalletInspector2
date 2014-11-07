@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@Scripts.Render("~/bundles/main")
+
+<div style="width:100%;">
+    <table style="width: 50%;float:left;">
+        <tr>
+            <td>
+                <div>
+                    @using (Ajax.BeginForm("GetEditDataByName", "Home", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "editItemsByName", OnSuccess = "UpdateButtons" }))
+                    {
+                        <div style="float:left">
+                            @Html.TextBox("name")
+                        </div>
+                        <div>
+                            <button style="" type="submit" value="Find" />
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="editItemsByName" class="row">
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table style="width: 50%;">
+        <tr>
+            <td>
+                <div>
+                    @using (Ajax.BeginForm("GetEditDataByTag", "Home", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "editItemsByTag", OnSuccess = "UpdateButtons" }))
+                    {
+                        <div style="float:left">
+                            @Html.TextBox("tag")
+                        </div>
+                        <div>
+                            <button style="" type="submit" value="Find" />
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="editItemsByTag" class="row">
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
