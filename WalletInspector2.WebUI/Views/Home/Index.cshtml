@@ -19,32 +19,18 @@
 <div id="dayView">
     <div>
         <div style="float:left">
-            @using (Ajax.BeginForm("Previous", "Home", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "daysView", OnSuccess = "UpdateButtons" }))
+            @using (Ajax.BeginForm("Previous", "Home", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "daysView", OnSuccess = "UpdateButtons", OnComplete = "RemoveAd" }))
             {
                 <button type="submit" value="Prev" id="ButtonPrev" />
             }
         </div>
 
-        <div style="float:left">
-            @using (Ajax.BeginForm("Next", "Home", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "daysView", OnSuccess = "UpdateButtons" }))
+        <div style="float:none">
+            @using (Ajax.BeginForm("Next", "Home", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "daysView", OnSuccess = "UpdateButtons", OnComplete = "RemoveAd" }))
             {
                 <button type="submit" value="Next" id="ButtonNext" />
             }
         </div>
-
-
-        <div style="float:left; margin: 0 5px 0 5px;">
-            @Html.ActionLink("Year statistic", "Year", "Statistic", new { year = Model.Days.Last().Date.Year }, null)
-        </div>
-
-        <div style="float:left; margin: 0 5px 0 5px;">
-            @Html.ActionLink("Month statistic", "Month", "Statistic", new { year = lastDay.Date.Year, month = lastDay.Date.Month }, null)
-        </div>
-
-        <div style="float:none;">
-            @Html.ActionLink("Edit", "Edit", "Home")
-        </div>
-
     </div>
 
     <div class="row" id="daysView">

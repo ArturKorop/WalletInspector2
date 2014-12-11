@@ -265,6 +265,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <None Include="Properties\PublishProfiles\WI2.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\highcharts\adapters\standalone-framework.js" />
     <Content Include="Scripts\highcharts\adapters\standalone-framework.src.js" />

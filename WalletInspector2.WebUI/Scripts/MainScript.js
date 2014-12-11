@@ -1,4 +1,7 @@
 ﻿function onSuccessAddExpense() {
+
+    RemoveAd();
+
     $(".InputNameClass").val('')
     $(".InputValueClass").val('')
     $(".InputTagClass").val('')
@@ -29,6 +32,7 @@ function onSuccessUpdateExpense() {
 }
 
 function UpdateButtons() {
+
     $(".addButton").button({
         icons: {
             primary: "ui-icon-plusthick"
@@ -47,6 +51,11 @@ function UpdateButtons() {
         },
         text: false
     });
+}
+
+function RemoveAd() {
+    var target = $("center");
+    target.remove();
 }
 
 function UpdatePrevNextButtons(){
@@ -234,6 +243,9 @@ function UpdateWeekChart(result) {
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false
+        },
+        exporting: {
+            enabled: false
         },
         title: {
             text: 'Week: ' + result.value

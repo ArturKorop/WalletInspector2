@@ -9,9 +9,13 @@
     @Styles.Render("~/Content/themes/redmond/jqueryuiredmond")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryUI")
+    @Scripts.Render("~/bundles/highcharts")
     @RenderSection("scripts", required: false)
 </head>
 <body>
+    @{
+        var date = DateTime.Now;
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -25,6 +29,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Edit", "Edit", "Home")</li>
+                    <li>@Html.ActionLink("Year statistic", "Year", "Statistic", new { year = date.Year }, null)</li>
+                    <li>@Html.ActionLink("Month statistic", "Month", "Statistic", new { year = date.Year, month = date.Month }, null)</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
